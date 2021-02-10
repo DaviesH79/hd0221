@@ -76,4 +76,22 @@ public class ToolRentalAgreement extends Tool{
     public void setFinalCharge(Float finalCharge) {
         this.finalCharge = finalCharge;
     }
-}
+
+    public void createRentalAgreement(Tool tool, ToolRentalAgreement agreement){
+
+    }
+
+    public void showRentalAgreement(){
+        System.out.println("Tool Code: " + this.getToolCode());
+        System.out.println("Tool Type: " + this.getToolType());
+        System.out.println("Tool Brand: " + this.getBrand());
+        System.out.println("Rental Days: " + this.getRentalDays());
+        System.out.println("Check Out Date: " + this.getCheckoutDate());
+        System.out.println("Due Date: " + this.getDueDate());
+        System.out.println("Daily Rental Charge: " + this.getDailyCharge());
+        System.out.println("Charge Days: " + this.getChargeDays());
+        System.out.println("Pre-discount Charge: " + this.getPreDiscountCharge());
+        System.out.println("Discount Percent: " + this.getDiscountPercent());
+        System.out.println("Discount Amount: " + this.getDiscountAmount());
+        System.out.println("Final Charge: " + this.getFinalCharge());
+    };}

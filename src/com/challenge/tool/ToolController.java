@@ -1,26 +1,28 @@
 package com.challenge.tool;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Controller class to handle requests
  */
 public class ToolController {
-    private Tool model;
-    private ToolView view;
+    private Tool toolModel;
+    private ToolRentalAgreement agreementModel;
+    private ToolView checkoutView;
+    private ToolRentalCalculations calculations;
 
-    public ToolController(Tool model, ToolView view){
-        this.model = model;
-        this.view = view;
+    public ToolController(Tool toolModel, ToolRentalAgreement agreementModel,
+                          ToolView checkoutView){
+        this.toolModel = toolModel;
+        this.agreementModel = agreementModel;
+        this.checkoutView = checkoutView;
     }
 
-    public void setToolCode(String type){
-        model.setToolCode(type);
+    public void createRentalAgreement(Tool tool, ToolRentalAgreement agreement){
+        agreementModel.createRentalAgreement(tool, agreement);
     }
 
-    public String getToolCode(){
-        return this.getToolCode();
+    public void updateView(){
+        agreementModel.showRentalAgreement();
     }
+
 
 }
