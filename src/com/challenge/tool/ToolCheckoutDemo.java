@@ -1,5 +1,6 @@
 package com.challenge.tool;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,28 +11,26 @@ import java.util.Scanner;
  */
 public class ToolCheckoutDemo {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws ParseException {
 
 
-        Scanner checkout = new Scanner(System.in);
-        System.out.println("Please select tool.");
-        System.out.println("Please enter rental checkout.");
-        System.out.println("Please enter rental return.");
+        //Scanner checkout = new Scanner(System.in);
+        //System.out.println("Please select tool.");
+        //System.out.println("Please enter rental checkout.");
+        //System.out.println("Please enter rental return.");
 
         String toolCode;
         Integer rentalDayCount;
         Float discountPercent;
         String checkOutDate;
 
-        checkOutDate = "02/14/21";
-
         // fetch the tool data based on the tool code
-        Tool toolToRent = retrieveToolData("LADW");
+        Tool toolToRent = retrieveToolData("CHNS");
 
         // create the view to display the Rental Agreement on console
         ToolView view = new ToolView();
 
-        // create the rental agreement to populate
+        // create the rental agreement object to populate
         //ToolRentalAgreement agreement = new ToolRentalAgreement();
         ToolRentalAgreement agreement = getRentalUserInput();
 
@@ -40,7 +39,7 @@ public class ToolCheckoutDemo {
 
         // Create the rental agreement and show in console
         controller.createRentalAgreement(toolToRent, agreement);
-        controller.updateView();
+        //controller.updateView();
     }
 
     // Retrieve toolCode from User Input and create the tool model
@@ -63,7 +62,8 @@ public class ToolCheckoutDemo {
                 true, false, false);
         Tool jackhammer2 = new Tool("JAKD", "Jackhammer", "DeWalt", 2.99f, true,
                 false, false);
-        System.out.println(ladder.getToolCode());
+
+        // add tools to map
         toolMap.put(ladder.getToolCode(), ladder);
         toolMap.put(chainsaw.getToolCode(), chainsaw);
         toolMap.put(jackhammer1.getToolCode(), jackhammer1);
@@ -75,7 +75,7 @@ public class ToolCheckoutDemo {
     private static ToolRentalAgreement getRentalUserInput(){
         ToolRentalAgreement agreement = new ToolRentalAgreement();
         agreement.setRentalDays(5);
-        agreement.setCheckoutDate("02/14/21");
+        agreement.setCheckoutDate("07/02/21");
         agreement.setDiscountPercent(20f);
         return agreement;
     }

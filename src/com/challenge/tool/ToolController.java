@@ -1,5 +1,7 @@
 package com.challenge.tool;
 
+import java.text.ParseException;
+
 /**
  * Controller class to handle requests
  */
@@ -16,13 +18,9 @@ public class ToolController {
         this.checkoutView = checkoutView;
     }
 
-    public void createRentalAgreement(Tool tool, ToolRentalAgreement agreement){
+    public void createRentalAgreement(Tool tool, ToolRentalAgreement agreement) throws ParseException {
+        agreementModel.calculateDueDate(agreement);
+        agreementModel.calculateChargeDays(agreement, tool);
         agreementModel.createRentalAgreement(tool, agreement);
     }
-
-    public void updateView(){
-        agreementModel.showRentalAgreement();
-    }
-
-
 }

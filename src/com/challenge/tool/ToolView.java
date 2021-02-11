@@ -2,9 +2,9 @@ package com.challenge.tool;
 
 public class ToolView {
 
-    public void agreement(ToolRentalAgreement agreement){
-        agreement.showRentalAgreement();
-    }
+    //public void agreement(ToolRentalAgreement agreement){
+    //   agreement.showRentalAgreement();
+    //}
     // public void showRentalAgreement(ToolRentalAgreement agreement){
     //    System.out.println("Tool Code: " + agreement.getToolCode());
     //    System.out.println("Tool Type: " + agreement.getToolType());
