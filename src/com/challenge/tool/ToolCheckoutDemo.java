@@ -2,8 +2,6 @@ package com.challenge.tool;
 
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 /**
  * ToolCheckout class receives user input and passes this data to the
@@ -11,7 +9,7 @@ import java.util.Scanner;
  */
 public class ToolCheckoutDemo {
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException, ToolExceptions {
 
 
         //Scanner checkout = new Scanner(System.in);
@@ -25,7 +23,7 @@ public class ToolCheckoutDemo {
         String checkOutDate;
 
         // fetch the tool data based on the tool code
-        Tool toolToRent = retrieveToolData("JAKR");
+        Tool toolToRent = retrieveToolData("LADW");
 
         // create the view to display the Rental Agreement on console
         //ToolView view = new ToolView();
@@ -36,6 +34,9 @@ public class ToolCheckoutDemo {
 
         // Send all data to controller
         ToolController controller = new ToolController(toolToRent, agreement);
+
+        // run validator
+        controller.performValidations(agreement);
 
         // Create the rental agreement and show in console
         controller.createRentalAgreement(toolToRent, agreement);
@@ -74,9 +75,9 @@ public class ToolCheckoutDemo {
     // create all required rental data
     private static ToolRentalAgreement getRentalUserInput(){
         ToolRentalAgreement agreement = new ToolRentalAgreement();
-        agreement.setRentalDays(5);
-        agreement.setCheckoutDate("09/03/15");
-        agreement.setDiscountPercent(101);
+        agreement.setRentalDays(3);
+        agreement.setCheckoutDate("07/02/20");
+        agreement.setDiscountPercent(10);
         return agreement;
     }
 }

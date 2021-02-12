@@ -7,15 +7,10 @@ public class ToolRentalAgreement extends ToolRentalCalculations{
     private int rentalDays;
     private String checkoutDate;
     private String dueDate;
-    //private int chargeDays;
     private int preDiscountCharge;
     private int discountPercent;
     private int discountAmount;
     private int finalCharge;
-
-    ToolRentalAgreement(String message) {
-        super(message);
-    }
 
     public ToolRentalAgreement() {
         super();
@@ -44,14 +39,6 @@ public class ToolRentalAgreement extends ToolRentalCalculations{
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
-
-    //public int getChargeDays() {
-    //    return chargeDays;
-    //}
-
-    //public void setChargeDays(int chargeDays) {
-    //    this.chargeDays = chargeDays;
-    //}
 
     public int getPreDiscountCharge() {
         return preDiscountCharge;
@@ -99,8 +86,8 @@ public class ToolRentalAgreement extends ToolRentalCalculations{
         System.out.println("Due Date: " + this.getDueDate());
         System.out.println("Daily Rental Charge: " + tool.getDailyCharge());
         System.out.println("Charge Days: " + this.getChargeDays());
-        System.out.println("Pre-discount Charge: " + this.getPreDiscountCharge());
-        System.out.println("Discount Percent: " + this.getDiscountPercent());
-        System.out.println("Discount Amount: " + this.getDiscountAmount());
-        System.out.println("Final Charge: " + this.getFinalCharge());
+        System.out.println("Pre-discount Charge: $" + this.getPreDiscountCharge());
+        System.out.println("Discount Percent: " + this.getDiscountPercent() + "%");
+        System.out.println("Discount Amount: $" + this.getDiscountAmount());
+        System.out.println("Final Charge: $" + this.getFinalCharge());
     };}

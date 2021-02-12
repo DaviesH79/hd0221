@@ -10,23 +10,16 @@ import java.util.Calendar;
 import java.util.Date;
 import static java.time.temporal.TemporalAdjusters.firstInMonth;
 
-public class ToolRentalCalculations extends Exceptions {
+public class ToolRentalCalculations {
 
     public int chargeDays;
 
-    ToolRentalCalculations(String message) {
-        super(message);
-    }
-
-    public ToolRentalCalculations() {
-        super();
-    }
-
     // calculated from checkout date and rental days
-    public void calculateDueDate(ToolRentalAgreement agreement) throws ParseException {
+    public void calculateDueDate(ToolRentalAgreement agreement) throws ParseException, ToolExceptions {
         Calendar calendar = Calendar.getInstance();
         String checkOutDate = agreement.getCheckoutDate();
         Integer rentalDays = agreement.getRentalDays();
+
 
         // convert string to date and add rental days
         Date checkOut = new SimpleDateFormat("MM/dd/yy").parse(checkOutDate);
@@ -57,8 +50,8 @@ public class ToolRentalCalculations extends Exceptions {
         calendar.setTime(checkOut);
 
         // HOLIDAYS
+        // pull year checkout date
         int year = calendar.get(Calendar.YEAR);
-        System.out.println(year);
         Date julyFourth = new SimpleDateFormat("MM/dd/yy").parse("07/03/" + year);
         // set up Labor Day check
         LocalDate local = LocalDate.of(year, 9, 1);
