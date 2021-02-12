@@ -3,7 +3,7 @@ package com.challenge.tool;
 /**
  * The ToolRentalAgreement class creates the rental agreement object for the view
  */
-public class ToolRentalAgreement extends ToolRentalCalculations{
+public class ToolRentalAgreement extends ToolRentalCalculations {
     private int rentalDays;
     private String checkoutDate;
     private String dueDate;
@@ -14,6 +14,21 @@ public class ToolRentalAgreement extends ToolRentalCalculations{
 
     public ToolRentalAgreement() {
         super();
+    }
+
+    public void showRentalAgreement(Tool tool, ToolRentalAgreement agreement) {
+        System.out.println("Tool Code: " + tool.getToolCode());
+        System.out.println("Tool Type: " + tool.getToolType());
+        System.out.println("Tool Brand: " + tool.getBrand());
+        System.out.println("Rental Days: " + this.getRentalDays());
+        System.out.println("Check Out Date: " + this.getCheckoutDate());
+        System.out.println("Due Date: " + this.getDueDate());
+        System.out.println("Daily Rental Charge: " + tool.getDailyCharge());
+        System.out.println("Charge Days: " + this.getChargeDays());
+        System.out.println("Pre-discount Charge: $" + this.getPreDiscountCharge());
+        System.out.println("Discount Percent: " + this.getDiscountPercent() + "%");
+        System.out.println("Discount Amount: $" + this.getDiscountAmount());
+        System.out.println("Final Charge: $" + this.getFinalCharge());
     }
 
     public int getRentalDays() {
@@ -72,22 +87,9 @@ public class ToolRentalAgreement extends ToolRentalCalculations{
         this.finalCharge = finalCharge;
     }
 
-    public void createRentalAgreement(Tool tool, ToolRentalAgreement agreement){
+    public void createRentalAgreement(Tool tool, ToolRentalAgreement agreement) {
         Tool toolToRent = tool;
         showRentalAgreement(tool, agreement);
     }
 
-    public void showRentalAgreement(Tool tool, ToolRentalAgreement agreement){
-        System.out.println("Tool Code: " + tool.getToolCode());
-        System.out.println("Tool Type: " + tool.getToolType());
-        System.out.println("Tool Brand: " + tool.getBrand());
-        System.out.println("Rental Days: " + this.getRentalDays());
-        System.out.println("Check Out Date: " + this.getCheckoutDate());
-        System.out.println("Due Date: " + this.getDueDate());
-        System.out.println("Daily Rental Charge: " + tool.getDailyCharge());
-        System.out.println("Charge Days: " + this.getChargeDays());
-        System.out.println("Pre-discount Charge: $" + this.getPreDiscountCharge());
-        System.out.println("Discount Percent: " + this.getDiscountPercent() + "%");
-        System.out.println("Discount Amount: $" + this.getDiscountAmount());
-        System.out.println("Final Charge: $" + this.getFinalCharge());
-    };}
+}
