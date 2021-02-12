@@ -25,17 +25,17 @@ public class ToolCheckoutDemo {
         String checkOutDate;
 
         // fetch the tool data based on the tool code
-        Tool toolToRent = retrieveToolData("CHNS");
+        Tool toolToRent = retrieveToolData("JAKR");
 
         // create the view to display the Rental Agreement on console
-        ToolView view = new ToolView();
+        //ToolView view = new ToolView();
 
         // create the rental agreement object to populate
         //ToolRentalAgreement agreement = new ToolRentalAgreement();
         ToolRentalAgreement agreement = getRentalUserInput();
 
         // Send all data to controller
-        ToolController controller = new ToolController(toolToRent, agreement, view);
+        ToolController controller = new ToolController(toolToRent, agreement);
 
         // Create the rental agreement and show in console
         controller.createRentalAgreement(toolToRent, agreement);
@@ -75,8 +75,8 @@ public class ToolCheckoutDemo {
     private static ToolRentalAgreement getRentalUserInput(){
         ToolRentalAgreement agreement = new ToolRentalAgreement();
         agreement.setRentalDays(5);
-        agreement.setCheckoutDate("07/02/21");
-        agreement.setDiscountPercent(20f);
+        agreement.setCheckoutDate("09/03/15");
+        agreement.setDiscountPercent(101);
         return agreement;
     }
 }

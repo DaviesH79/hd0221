@@ -8,19 +8,22 @@ import java.text.ParseException;
 public class ToolController {
     private Tool toolModel;
     private ToolRentalAgreement agreementModel;
-    private ToolView checkoutView;
-    private ToolRentalCalculations calculations;
+    //private ToolRentalCalculations calculations;
 
-    public ToolController(Tool toolModel, ToolRentalAgreement agreementModel,
-                          ToolView checkoutView){
+    public ToolController(Tool toolModel, ToolRentalAgreement agreementModel){
         this.toolModel = toolModel;
         this.agreementModel = agreementModel;
-        this.checkoutView = checkoutView;
     }
+
+    //public ToolController(Tool toolToRent, ToolRentalAgreement agreement) {
+    //}
 
     public void createRentalAgreement(Tool tool, ToolRentalAgreement agreement) throws ParseException {
         agreementModel.calculateDueDate(agreement);
         agreementModel.calculateChargeDays(agreement, tool);
+        agreementModel.calculatePreDiscountCharge(tool, agreement);
+        agreementModel.calculateDiscountAmount(agreement);
+        agreementModel.calculateFinalCharge(agreement);
         agreementModel.createRentalAgreement(tool, agreement);
     }
 }

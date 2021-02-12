@@ -4,21 +4,23 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import static java.time.temporal.TemporalAdjusters.firstInMonth;
 
-public class ToolRentalCalculations extends Tool{
-
-    //private Tool tool;
-    //private ToolRentalAgreement agreement;
-    //public String dueDate;
+public class ToolRentalCalculations extends Exceptions {
 
     public int chargeDays;
-    public Float preDiscountCharge;
+
+    ToolRentalCalculations(String message) {
+        super(message);
+    }
+
+    public ToolRentalCalculations() {
+        super();
+    }
 
     // calculated from checkout date and rental days
     public void calculateDueDate(ToolRentalAgreement agreement) throws ParseException {
@@ -50,65 +52,67 @@ public class ToolRentalCalculations extends Tool{
         Boolean weekendCharge = tool.getWeekendCharge();
         Boolean holidayCharge = tool.getHolidayCharge();
 
-        Date julyFourth = new SimpleDateFormat("MM/dd").parse("07/04");
-        // set up Labor Day check
-        int year = calendar.get(Calendar.YEAR);
-        int month = 9;
-        LocalDate local = LocalDate.of(year, month, 1);
-        LocalDate laborDay = local.with(firstInMonth(DayOfWeek.MONDAY));
-
         // format date
         Date checkOut = new SimpleDateFormat("MM/dd/yy").parse(checkOutDate);
         calendar.setTime(checkOut);
-        //calendar.add(Calendar.DAY_OF_MONTH, 1);
-        //Date startChargeDate = calendar.getTime();
+
+        // HOLIDAYS
+        int year = calendar.get(Calendar.YEAR);
+        System.out.println(year);
+        Date julyFourth = new SimpleDateFormat("MM/dd/yy").parse("07/03/" + year);
+        // set up Labor Day check
+        LocalDate local = LocalDate.of(year, 9, 1);
+        LocalDate laborDay = local.with(firstInMonth(DayOfWeek.MONDAY));
 
         // check if any of the days are not chargeable days
         Integer chargeDayCount = rentalDays;
         for (int i = 0; i < rentalDays; i++){
+            // start charging the day AFTER checkout date
             calendar.add(Calendar.DAY_OF_MONTH, 1);
-            // convert current date to local date for comparison
-            LocalDate laborDayDate = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            // convert current date to local date for comparison to LaborDay
+            LocalDate currentDate = calendar.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-            System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
-            System.out.println(weekdayCharge);
             // if it's a weekday and should not be charged
             if ((calendar.get(Calendar.DAY_OF_WEEK) != 7 ||
                     calendar.get(Calendar.DAY_OF_WEEK) != 1)  && !weekdayCharge){
                 chargeDayCount -= 1;
-                System.out.println("inside !weekdaycharge");
             }
             // if it's a weekend and should not be charged
             else if ((calendar.get(Calendar.DAY_OF_WEEK) == 7 ||
                     calendar.get(Calendar.DAY_OF_WEEK) == 1)  && !weekendCharge){
                 chargeDayCount -= 1;
-                System.out.println("inside !weekendcharge");
             }
             // if it's a holiday and should not be charged
-            else if ((calendar.getTime() == julyFourth || laborDayDate == laborDay) && !holidayCharge){
+            if ((calendar.getTime().compareTo(julyFourth) == 0 || currentDate.compareTo(laborDay) == 0)
+                    && !holidayCharge){
                 chargeDayCount -= 1;
-                System.out.println("inside !holidaycharge");
             }
         }
-
         this.setChargeDays(chargeDayCount);
     }
 
     // calculated as charge day * daily charge, resulting amount rounded half up to cents
-    public static void calculatePreDiscountCharge(Integer chargeDays, Tool tool){
+    public void calculatePreDiscountCharge(Tool tool, ToolRentalAgreement agreement){
         Float dailyCharge = tool.getDailyCharge();
-
+        Integer chargeDays = this.getChargeDays();
+        int preDiscountCharge = Math.round(dailyCharge * chargeDays);
+        agreement.setPreDiscountCharge(preDiscountCharge);
     }
 
     // calculated from discount percentage and pre-discount charge, resulting amount
     // rounded half up to cents
     public static void calculateDiscountAmount(ToolRentalAgreement agreement){
-        Float discountPercent = agreement.getDiscountPercent();
+        int discountPercent = agreement.getDiscountPercent();
+        int discountAmount = Math.round((discountPercent * agreement.getPreDiscountCharge())/100);
+        agreement.setDiscountAmount(discountAmount);
     }
 
     // calculated as pre-discount charge minus discount amount
-    public static void calculateFinalCharge(){
-
+    public static void calculateFinalCharge(ToolRentalAgreement agreement){
+        int preDiscount = agreement.getPreDiscountCharge();
+        int discount = agreement.getDiscountAmount();
+        int finalCharge = preDiscount - discount;
+        agreement.setFinalCharge(finalCharge);
     }
 
     public int getChargeDays() {
@@ -117,13 +121,5 @@ public class ToolRentalCalculations extends Tool{
 
     public void setChargeDays(int chargeDays) {
         this.chargeDays = chargeDays;
-    }
-
-    public Float getPreDiscountCharge() {
-        return preDiscountCharge;
-    }
-
-    public void setPreDiscountCharge(Float preDiscountCharge) {
-        this.preDiscountCharge = preDiscountCharge;
     }
 }

@@ -8,10 +8,18 @@ public class ToolRentalAgreement extends ToolRentalCalculations{
     private String checkoutDate;
     private String dueDate;
     //private int chargeDays;
-    private Float preDiscountCharge;
-    private Float discountPercent;
-    private Float discountAmount;
-    private Float finalCharge;
+    private int preDiscountCharge;
+    private int discountPercent;
+    private int discountAmount;
+    private int finalCharge;
+
+    ToolRentalAgreement(String message) {
+        super(message);
+    }
+
+    public ToolRentalAgreement() {
+        super();
+    }
 
     public int getRentalDays() {
         return rentalDays;
@@ -45,35 +53,35 @@ public class ToolRentalAgreement extends ToolRentalCalculations{
     //    this.chargeDays = chargeDays;
     //}
 
-    public Float getPreDiscountCharge() {
+    public int getPreDiscountCharge() {
         return preDiscountCharge;
     }
 
-    public void setPreDiscountCharge(Float preDiscountCharge) {
+    public void setPreDiscountCharge(int preDiscountCharge) {
         this.preDiscountCharge = preDiscountCharge;
     }
 
-    public Float getDiscountPercent() {
+    public int getDiscountPercent() {
         return discountPercent;
     }
 
-    public void setDiscountPercent(Float discountPercent) {
+    public void setDiscountPercent(int discountPercent) {
         this.discountPercent = discountPercent;
     }
 
-    public Float getDiscountAmount() {
+    public int getDiscountAmount() {
         return discountAmount;
     }
 
-    public void setDiscountAmount(Float discountAmount) {
+    public void setDiscountAmount(int discountAmount) {
         this.discountAmount = discountAmount;
     }
 
-    public Float getFinalCharge() {
+    public int getFinalCharge() {
         return finalCharge;
     }
 
-    public void setFinalCharge(Float finalCharge) {
+    public void setFinalCharge(int finalCharge) {
         this.finalCharge = finalCharge;
     }
 
