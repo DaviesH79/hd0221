@@ -13,16 +13,19 @@ class ToolControllerTest {
     ToolRentalAgreement agreement = new ToolRentalAgreement();
     ToolController controller = new ToolController(tool, agreement);
     ToolExceptions exceptions = new ToolExceptions();
+
+    Tool ladder = new Tool("LADW", "Ladder", "Werner", 1.99f, true,
+            true, false);
+    Tool chainsaw = new Tool("CHNS", "Chainsaw", "Stihl", 1.49f, true,
+            false, true);
+    Tool jakr = new Tool("JAKR", "Jackhammer", "Ridgid", 2.99f, true,
+            false, false);
+    Tool jakd = new Tool("JAKD", "Jackhammer", "DeWalt", 2.99f, true,
+            false, false);
+
     @Test
     void test1() {
-        tool.setToolCode("JAKR");
-        tool.setToolType("Jackhammer");
-        tool.setBrand("Rigid");
-        tool.setDailyCharge(2.99f);
-        tool.setWeekdayCharge(true);
-        tool.setWeekendCharge(false);
-        tool.setHolidayCharge(false);
-
+        this.tool = jakr;
         agreement.setCheckoutDate("09/03/15");
         agreement.setRentalDays(5);
         agreement.setDiscountPercent(101);
@@ -33,13 +36,7 @@ class ToolControllerTest {
 
     @Test
     void test2() throws ParseException, ToolExceptions {
-        tool.setToolCode("LADW");
-        tool.setToolType("Ladder");
-        tool.setBrand("Werner");
-        tool.setDailyCharge(1.99f);
-        tool.setWeekdayCharge(true);
-        tool.setWeekendCharge(true);
-        tool.setHolidayCharge(false);
+        this.tool = ladder;
 
         agreement.setCheckoutDate("07/02/20");
         agreement.setRentalDays(3);
@@ -52,14 +49,7 @@ class ToolControllerTest {
 
     @Test
     void test3() throws ParseException, ToolExceptions {
-        tool.setToolCode("CHNS");
-        tool.setToolType("Chainsaw");
-        tool.setBrand("Stihl");
-        tool.setDailyCharge(1.49f);
-        tool.setWeekdayCharge(true);
-        tool.setWeekendCharge(false);
-        tool.setHolidayCharge(true);
-
+        this.tool = chainsaw;
         agreement.setCheckoutDate("07/02/15");
         agreement.setRentalDays(5);
         agreement.setDiscountPercent(25);
@@ -67,5 +57,41 @@ class ToolControllerTest {
         controller.performValidations(agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(3, agreement.getChargeDays());
+    }
+
+    @Test
+    void test4() throws ParseException, ToolExceptions {
+        this.tool = jakd;
+        agreement.setCheckoutDate("09/03/15");
+        agreement.setRentalDays(6);
+        agreement.setDiscountPercent(0);
+
+        controller.performValidations(agreement);
+        controller.createRentalAgreement(tool, agreement);
+        Assert.assertEquals(3, agreement.getChargeDays());
+    }
+
+    @Test
+    void test5() throws ParseException, ToolExceptions {
+        this.tool = jakr;
+        agreement.setCheckoutDate("07/02/15");
+        agreement.setRentalDays(9);
+        agreement.setDiscountPercent(0);
+
+        controller.performValidations(agreement);
+        controller.createRentalAgreement(tool, agreement);
+        Assert.assertEquals(5, agreement.getChargeDays());
+    }
+
+    @Test
+    void test6() throws ParseException, ToolExceptions {
+        this.tool = jakr;
+        agreement.setCheckoutDate("07/02/20");
+        agreement.setRentalDays(4);
+        agreement.setDiscountPercent(50);
+
+        controller.performValidations(agreement);
+        controller.createRentalAgreement(tool, agreement);
+        Assert.assertEquals(1, agreement.getChargeDays());
     }
 }
