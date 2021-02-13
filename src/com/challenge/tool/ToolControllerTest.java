@@ -11,7 +11,8 @@ class ToolControllerTest {
 
     Tool tool = new Tool();
     ToolRentalAgreement agreement = new ToolRentalAgreement();
-    ToolController controller = new ToolController(tool, agreement);
+    //ToolController controller = new ToolController(tool, agreement);
+    ToolController controller = new ToolController(agreement);
     ToolExceptions exceptions = new ToolExceptions();
     ToolAgreementValidator validator = new ToolAgreementValidator();
 
@@ -41,7 +42,7 @@ class ToolControllerTest {
         agreement.setRentalDays(3);
         agreement.setDiscountPercent(10);
 
-        controller.performValidations(agreement);
+        controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(2, agreement.getChargeDays());
     }
@@ -53,7 +54,7 @@ class ToolControllerTest {
         agreement.setRentalDays(5);
         agreement.setDiscountPercent(25);
 
-        controller.performValidations(agreement);
+        controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(3, agreement.getChargeDays());
     }
@@ -65,7 +66,7 @@ class ToolControllerTest {
         agreement.setRentalDays(6);
         agreement.setDiscountPercent(0);
 
-        controller.performValidations(agreement);
+        controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(3, agreement.getChargeDays());
     }
@@ -77,7 +78,7 @@ class ToolControllerTest {
         agreement.setRentalDays(9);
         agreement.setDiscountPercent(0);
 
-        controller.performValidations(agreement);
+        controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(5, agreement.getChargeDays());
     }
@@ -89,7 +90,7 @@ class ToolControllerTest {
         agreement.setRentalDays(4);
         agreement.setDiscountPercent(50);
 
-        controller.performValidations(agreement);
+        controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(1, agreement.getChargeDays());
     }

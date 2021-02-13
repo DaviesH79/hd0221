@@ -2,7 +2,7 @@ package com.challenge.tool;
 
 public class ToolAgreementValidator extends ToolExceptions{
 
-    public void validate(ToolRentalAgreement agreement) throws ToolExceptions {
+    public void validate(Tool tool, ToolRentalAgreement agreement) throws ToolExceptions {
 
         int rentalDays = agreement.getRentalDays();
         int discountPercent = agreement.getDiscountPercent();
