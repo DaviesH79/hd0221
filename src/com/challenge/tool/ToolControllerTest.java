@@ -13,6 +13,7 @@ class ToolControllerTest {
     ToolRentalAgreement agreement = new ToolRentalAgreement();
     ToolController controller = new ToolController(tool, agreement);
     ToolExceptions exceptions = new ToolExceptions();
+    ToolAgreementValidator validator = new ToolAgreementValidator();
 
     Tool ladder = new Tool("LADW", "Ladder", "Werner", 1.99f, true,
             true, false);
@@ -26,12 +27,10 @@ class ToolControllerTest {
     @Test
     void test1() {
         this.tool = jakr;
-        agreement.setCheckoutDate("09/03/15");
-        agreement.setRentalDays(5);
-        agreement.setDiscountPercent(101);
-
-        controller.performValidations(agreement);
-
+        assertThrows(ToolExceptions.class, ()->{
+            ToolAgreementValidator validator = new ToolAgreementValidator();
+            validator.DiscountPercentageException(102);
+        });
     }
 
     @Test

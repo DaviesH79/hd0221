@@ -14,7 +14,7 @@ public class ToolController {
         this.agreementModel = agreementModel;
     }
 
-    public void performValidations(ToolRentalAgreement agreement ){
+    public void performValidations(ToolRentalAgreement agreement ) throws ToolExceptions {
         ToolAgreementValidator validator = new ToolAgreementValidator();
         validator.validate(agreement);
     }

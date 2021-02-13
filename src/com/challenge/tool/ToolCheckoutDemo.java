@@ -75,9 +75,9 @@ public class ToolCheckoutDemo {
     // create all required rental data
     private static ToolRentalAgreement getRentalUserInput(){
         ToolRentalAgreement agreement = new ToolRentalAgreement();
-        agreement.setRentalDays(3);
+        agreement.setRentalDays(5);
         agreement.setCheckoutDate("07/02/20");
-        agreement.setDiscountPercent(10);
+        agreement.setDiscountPercent(20);
         return agreement;
     }
 }
