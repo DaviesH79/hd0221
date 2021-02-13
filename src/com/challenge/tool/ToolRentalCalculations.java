@@ -88,7 +88,7 @@ public class ToolRentalCalculations {
     public void calculatePreDiscountCharge(Tool tool, ToolRentalAgreement agreement){
         Float dailyCharge = tool.getDailyCharge();
         Integer chargeDays = this.getChargeDays();
-        int preDiscountCharge = Math.round(dailyCharge * chargeDays);
+        Double preDiscountCharge = (double)Math.round(dailyCharge * chargeDays);
         agreement.setPreDiscountCharge(preDiscountCharge);
     }
 
@@ -96,15 +96,15 @@ public class ToolRentalCalculations {
     // rounded half up to cents
     public static void calculateDiscountAmount(ToolRentalAgreement agreement){
         int discountPercent = agreement.getDiscountPercent();
-        int discountAmount = Math.round((discountPercent * agreement.getPreDiscountCharge())/100);
-        agreement.setDiscountAmount(discountAmount);
+        long discountAmount = Math.round((discountPercent * agreement.getPreDiscountCharge())/100);
+        agreement.setDiscountAmount((double) discountAmount);
     }
 
     // calculated as pre-discount charge minus discount amount
     public static void calculateFinalCharge(ToolRentalAgreement agreement){
-        int preDiscount = agreement.getPreDiscountCharge();
-        int discount = agreement.getDiscountAmount();
-        int finalCharge = preDiscount - discount;
+        Double preDiscount = agreement.getPreDiscountCharge();
+        Double discount = agreement.getDiscountAmount();
+        double finalCharge = preDiscount - discount;
         agreement.setFinalCharge(finalCharge);
     }
 

@@ -7,10 +7,10 @@ public class ToolRentalAgreement extends ToolRentalCalculations {
     private int rentalDays;
     private String checkoutDate;
     private String dueDate;
-    private int preDiscountCharge;
+    private Double preDiscountCharge;
     private int discountPercent;
-    private int discountAmount;
-    private int finalCharge;
+    private Double discountAmount;
+    private Double finalCharge;
 
     public ToolRentalAgreement() {
         super();
@@ -23,12 +23,12 @@ public class ToolRentalAgreement extends ToolRentalCalculations {
         System.out.println("Rental Days: " + this.getRentalDays());
         System.out.println("Check Out Date: " + this.getCheckoutDate());
         System.out.println("Due Date: " + this.getDueDate());
-        System.out.println("Daily Rental Charge: " + tool.getDailyCharge());
+        System.out.println("Daily Rental Charge: $" + tool.getDailyCharge());
         System.out.println("Charge Days: " + this.getChargeDays());
-        System.out.println("Pre-discount Charge: $" + this.getPreDiscountCharge());
+        System.out.println("Pre-discount Charge: $" + String.format("%.2f", this.getPreDiscountCharge()));
         System.out.println("Discount Percent: " + this.getDiscountPercent() + "%");
-        System.out.println("Discount Amount: $" + this.getDiscountAmount());
-        System.out.println("Final Charge: $" + this.getFinalCharge());
+        System.out.println("Discount Amount: $" + String.format("%.2f",this.getDiscountAmount()));
+        System.out.println("Final Charge: $" + String.format("%.2f", this.getFinalCharge()));
     }
 
     public int getRentalDays() {
@@ -55,11 +55,11 @@ public class ToolRentalAgreement extends ToolRentalCalculations {
         this.dueDate = dueDate;
     }
 
-    public int getPreDiscountCharge() {
+    public Double getPreDiscountCharge() {
         return preDiscountCharge;
     }
 
-    public void setPreDiscountCharge(int preDiscountCharge) {
+    public void setPreDiscountCharge(Double preDiscountCharge) {
         this.preDiscountCharge = preDiscountCharge;
     }
 
@@ -71,19 +71,19 @@ public class ToolRentalAgreement extends ToolRentalCalculations {
         this.discountPercent = discountPercent;
     }
 
-    public int getDiscountAmount() {
+    public Double getDiscountAmount() {
         return discountAmount;
     }
 
-    public void setDiscountAmount(int discountAmount) {
+    public void setDiscountAmount(Double discountAmount) {
         this.discountAmount = discountAmount;
     }
 
-    public int getFinalCharge() {
+    public Double getFinalCharge() {
         return finalCharge;
     }
 
-    public void setFinalCharge(int finalCharge) {
+    public void setFinalCharge(Double finalCharge) {
         this.finalCharge = finalCharge;
     }
 
