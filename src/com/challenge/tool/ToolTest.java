@@ -7,26 +7,23 @@ import java.text.ParseException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ToolControllerTest {
+class ToolTest {
 
     Tool tool = new Tool();
     ToolRentalAgreement agreement = new ToolRentalAgreement();
-    //ToolController controller = new ToolController(tool, agreement);
     ToolController controller = new ToolController(agreement);
-    ToolExceptions exceptions = new ToolExceptions();
-    ToolAgreementValidator validator = new ToolAgreementValidator();
 
-    Tool ladder = new Tool("LADW", "Ladder", "Werner", 1.99f, true,
+    Tool ladder = new Tool("LADW", "Ladder", "Werner", 1.99, true,
             true, false);
-    Tool chainsaw = new Tool("CHNS", "Chainsaw", "Stihl", 1.49f, true,
+    Tool chainsaw = new Tool("CHNS", "Chainsaw", "Stihl", 1.49, true,
             false, true);
-    Tool jakr = new Tool("JAKR", "Jackhammer", "Ridgid", 2.99f, true,
+    Tool jakr = new Tool("JAKR", "Jackhammer", "Ridgid", 2.99, true,
             false, false);
-    Tool jakd = new Tool("JAKD", "Jackhammer", "DeWalt", 2.99f, true,
+    Tool jakd = new Tool("JAKD", "Jackhammer", "DeWalt", 2.99, true,
             false, false);
 
     @Test
-    void test1() {
+    void testDiscountException() {
         this.tool = jakr;
         assertThrows(ToolExceptions.class, ()->{
             ToolAgreementValidator validator = new ToolAgreementValidator();
@@ -45,6 +42,9 @@ class ToolControllerTest {
         controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(2, agreement.getChargeDays());
+        Assert.assertEquals(3.98, agreement.getPreDiscountCharge(), 0.00);
+        Assert.assertEquals(0.40, agreement.getDiscountAmount(), 0.00);
+        Assert.assertEquals(3.58, agreement.getFinalCharge(), 0.00);
     }
 
     @Test
@@ -57,6 +57,9 @@ class ToolControllerTest {
         controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(3, agreement.getChargeDays());
+        Assert.assertEquals(4.47, agreement.getPreDiscountCharge(), 0.00);
+        Assert.assertEquals(1.12, agreement.getDiscountAmount(), 0.00);
+        Assert.assertEquals(3.35, agreement.getFinalCharge(), 0.00);
     }
 
     @Test
@@ -69,6 +72,9 @@ class ToolControllerTest {
         controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(3, agreement.getChargeDays());
+        Assert.assertEquals(8.97, agreement.getPreDiscountCharge(), 0.00);
+        Assert.assertEquals(0, agreement.getDiscountAmount(), 0.00);
+        Assert.assertEquals(8.97, agreement.getFinalCharge(), 0.00);
     }
 
     @Test
@@ -81,6 +87,9 @@ class ToolControllerTest {
         controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(5, agreement.getChargeDays());
+        Assert.assertEquals(14.95, agreement.getPreDiscountCharge(), 0.00);
+        Assert.assertEquals(0, agreement.getDiscountAmount(), 0.00);
+        Assert.assertEquals(14.95, agreement.getFinalCharge(), 0.00);
     }
 
     @Test
@@ -93,5 +102,16 @@ class ToolControllerTest {
         controller.performValidations(tool, agreement);
         controller.createRentalAgreement(tool, agreement);
         Assert.assertEquals(1, agreement.getChargeDays());
+        Assert.assertEquals(2.99, agreement.getPreDiscountCharge(), 0.00);
+        Assert.assertEquals(1.50, agreement.getDiscountAmount(), 0.00);
+        Assert.assertEquals(1.49, agreement.getFinalCharge(), 0.00);
+    }
+
+    @Test
+    void testRentalException() {
+        assertThrows(ToolExceptions.class, ()->{
+            ToolAgreementValidator validator = new ToolAgreementValidator();
+            validator.RentalDaysException(0);
+        });
     }
 }

@@ -7,7 +7,7 @@ public class Tool {
     private String toolType;
     private String brand;
     private String toolCode;
-    private Float dailyCharge;
+    private Double dailyCharge;
     private Boolean weekdayCharge;
     private Boolean weekendCharge;
     private Boolean holidayCharge;
@@ -16,7 +16,7 @@ public class Tool {
     public Tool(){}
 
     // Constructor that sets all Tool attributes
-    public Tool(String code, String type, String brand, float dailyCharge,
+    public Tool(String code, String type, String brand, Double dailyCharge,
                 boolean weekdayCharge, boolean weekendCharge, boolean holidayCharge) {
         this.toolCode = code;
         this.toolType = type;
@@ -73,11 +73,11 @@ public class Tool {
         this.toolCode = toolCode;
     }
 
-    public Float getDailyCharge() {
+    public Double getDailyCharge() {
         return dailyCharge;
     }
 
-    public void setDailyCharge(Float dailyCharge) {
+    public void setDailyCharge(Double dailyCharge) {
         this.dailyCharge = dailyCharge;
     }
 

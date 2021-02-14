@@ -7,13 +7,11 @@ import java.util.HashMap;
  * Controller class to handle requests
  */
 public class ToolController {
-//    private Tool toolModel;
+
     private ToolRentalAgreement agreementModel;
 
     // default constructor
-    public ToolController(){
-
-    }
+    public ToolController(){}
 
     public ToolController(ToolRentalAgreement agreementModel){
         this.agreementModel = agreementModel;
@@ -32,30 +30,22 @@ public class ToolController {
         agreementModel.calculateFinalCharge(agreement);
         agreementModel.createRentalAgreement(tool, agreement);
     }
-    // Retrieve toolCode from User Input and create the tool model
-    public static Tool retrieveToolData(String toolType, String toolBrand) throws ToolExceptions {
-        String type = toolType.toLowerCase();
-        String brand = toolBrand.toLowerCase();
-        String typeBrand = type + brand;
-        String toolCode = "";
-
-        // get tool's corresponding code
-        switch (typeBrand){
-            case "ladderwerner": toolCode = "LADW";
-                break;
-            case "chainsawstihl": toolCode = "CHNS";
-                break;
-            case "jackhammerridgid": toolCode = "JAKR";
-                break;
-            case "jackhammerdewalt": toolCode = "JAKD";
-                break;
-            case "default": toolCode = "";
-        }
-        if (toolCode == ""){
-            ToolExceptions e = new ToolExceptions();
-            throw e;
-        }
+    // Retrieve toolCode from User Input and create and return the tool
+    public static Tool retrieveToolData(String toolCode) throws ToolExceptions {
+        // No DB, using a hashmap instead
         HashMap map = createToolObjects();
+
+        // make sure tool exists in map otherwise throw exception
+        try {
+            if (!map.containsKey(toolCode)) {
+                ToolExceptions e = new ToolExceptions();
+                e.ToolExistsException();
+            }
+        } catch (ToolExceptions msg){
+           System.out.println(msg);
+           System.out.println("Please enter a valid tool and brand.");
+           System.exit(1);
+        }
         Tool getTool = (Tool)map.get(toolCode);
         return getTool;
     }
@@ -65,13 +55,13 @@ public class ToolController {
     private static HashMap createToolObjects(){
         HashMap<String, Tool> toolMap = new HashMap<String, Tool>();
 
-        Tool ladder = new Tool("LADW", "Ladder", "Werner", 1.99f, true,
+        Tool ladder = new Tool("LADW", "Ladder", "Werner", 1.99, true,
                 true, false);
-        Tool chainsaw = new Tool("CHNS", "Chainsaw", "Stihl", 1.49f, true,
+        Tool chainsaw = new Tool("CHNS", "Chainsaw", "Stihl", 1.49, true,
                 false, true);
-        Tool jackhammer1 = new Tool("JAKR", "Jackhammer", "Ridgid", 2.99f,
+        Tool jackhammer1 = new Tool("JAKR", "Jackhammer", "Ridgid", 2.99,
                 true, false, false);
-        Tool jackhammer2 = new Tool("JAKD", "Jackhammer", "DeWalt", 2.99f, true,
+        Tool jackhammer2 = new Tool("JAKD", "Jackhammer", "DeWalt", 2.99, true,
                 false, false);
 
         // add tools to map
@@ -80,16 +70,5 @@ public class ToolController {
         toolMap.put(jackhammer1.getToolCode(), jackhammer1);
         toolMap.put(jackhammer2.getToolCode(), jackhammer2);
         return toolMap;
-    }
-
-    // create all required rental data
-    // used if we are not going to hardcode user input
-    // not in use at this time
-    private static ToolRentalAgreement getRentalUserInput(){
-        ToolRentalAgreement agreement = new ToolRentalAgreement();
-        agreement.setRentalDays(5);
-        agreement.setCheckoutDate("07/02/20");
-        agreement.setDiscountPercent(20);
-        return agreement;
     }
 }

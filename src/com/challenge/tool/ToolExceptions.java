@@ -25,4 +25,10 @@ public class ToolExceptions extends Exception {
         }
     }
 
+    public void ToolExistsException() throws ToolExceptions {
+        String msg = "The tool you entered could not be found.";
+        ToolExceptions e = new ToolExceptions(msg);
+        throw e;
+    }
+
 }
