@@ -1,5 +1,7 @@
 package com.challenge.tool;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -86,18 +88,26 @@ public class ToolRentalCalculations {
 
     // calculated as charge day * daily charge, resulting amount rounded half up to cents
     public void calculatePreDiscountCharge(Tool tool, ToolRentalAgreement agreement){
-        Float dailyCharge = tool.getDailyCharge();
-        Integer chargeDays = this.getChargeDays();
-        Double preDiscountCharge = (double)Math.round(dailyCharge * chargeDays);
-        agreement.setPreDiscountCharge(preDiscountCharge);
+        double dailyCharge = tool.getDailyCharge();
+        int chargeDays = this.getChargeDays();
+        double preDiscountCharge = dailyCharge * chargeDays;
+
+        // Round half up
+        BigDecimal bd = new BigDecimal(preDiscountCharge).setScale(2, RoundingMode.HALF_UP);
+        double discount = bd.doubleValue();
+        agreement.setPreDiscountCharge(discount);
     }
 
     // calculated from discount percentage and pre-discount charge, resulting amount
     // rounded half up to cents
     public static void calculateDiscountAmount(ToolRentalAgreement agreement){
         int discountPercent = agreement.getDiscountPercent();
-        long discountAmount = Math.round((discountPercent * agreement.getPreDiscountCharge())/100);
-        agreement.setDiscountAmount((double) discountAmount);
+        double discountAmount = (discountPercent * agreement.getPreDiscountCharge())/100;
+
+        // Round half up
+        BigDecimal bd = new BigDecimal(discountAmount).setScale(2, RoundingMode.HALF_UP);
+        double discountAmt = bd.doubleValue();
+        agreement.setDiscountAmount(discountAmt);
     }
 
     // calculated as pre-discount charge minus discount amount
@@ -105,7 +115,11 @@ public class ToolRentalCalculations {
         Double preDiscount = agreement.getPreDiscountCharge();
         Double discount = agreement.getDiscountAmount();
         double finalCharge = preDiscount - discount;
-        agreement.setFinalCharge(finalCharge);
+
+        // Round half up
+        BigDecimal bd = new BigDecimal(finalCharge).setScale(2, RoundingMode.HALF_UP);
+        double totalCharge = bd.doubleValue();
+        agreement.setFinalCharge(totalCharge);
     }
 
     public int getChargeDays() {
